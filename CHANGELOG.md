@@ -1,4 +1,6 @@
 # teto-tool
+## 1.0.3
+Fix bug
 ## 1.0.2
 Remove unless dependencies
 ## 1.0.1

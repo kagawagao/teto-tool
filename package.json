@@ -1,9 +1,8 @@
 {
   "name": "teto-tool",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "just a tool",
-  "scripts": {
-  },
+  "scripts": {},
   "bin": {
     "teto": "bin/teto.js"
   },
@@ -17,6 +16,7 @@
     "download-git-repo": "^0.1.1",
     "jsonfile": "^2.2.3",
     "path": "^0.12.7",
-    "progress": "^1.1.8"
+    "progress": "^1.1.8",
+    "prompt-for-patched": "^1.1.3"
   }
 }

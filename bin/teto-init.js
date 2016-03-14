@@ -4,12 +4,12 @@ var download = require('download-git-repo')
 var program = require('commander')
 var fs = require('fs')
 var path = require('path')
-var rm = require('rimraf').sync
 var chalk = require('chalk')
 var jsonfile = require('jsonfile')
 var co = require('co')
 var coPrompt = require('co-prompt')
 var exec = require('child_process').execSync
+var prompt  = require('prompt-for-patched')
 var exists = fs.existsSync
 
 /**
@@ -101,24 +101,25 @@ function writePackageJSON () {
         throw err
       }
     })
-    // prompt({
-    //   ok: {
-    //     type: 'boolean',
-    //     default: true,
-    //     label: 'install packages now?'
-    //   }
-    // }, function (err, answers) {
-    //   if (err) {
-    //     throw err
-    //   }
-    var install = yield coPrompt.confirm('install packages now? ');
-    if (install) {
+    prompt({
+      ok: {
+        type: 'boolean',
+        default: true,
+        label: 'install packages now?'
+      }
+    }, function (err, answers) {
+      if (err) {
+        throw err
+      }
+    if (answers.ok) {
       console.log()
       console.log('waiting·······')
       console.log()
       exec('npm install')
       console.log()
-    }
+      console.log('Install packages success!!!')
+    } else {
     console.log('Success!!!')
+    }
   })
 }
