@@ -11,3 +11,6 @@ $ npm install teto-tool -g
 ```bash
 $ teto init demo [source]
 ```
+Source: {gitUsername}/{repo}
+
+You can specify a repository to create a new project, the default repository is tetojs/teto.js
