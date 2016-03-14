@@ -7,7 +7,6 @@ var path = require('path')
 var rm = require('rimraf').sync
 var chalk = require('chalk')
 var jsonfile = require('jsonfile')
-var prompt = require('prompt-for-patched')
 var co = require('co')
 var coPrompt = require('co-prompt')
 var exec = require('child_process').execSync
@@ -112,7 +111,7 @@ function writePackageJSON () {
     //   if (err) {
     //     throw err
     //   }
-    var install = yield confirm('install packages now? ');
+    var install = yield coPrompt.confirm('install packages now? ');
     if (install) {
       console.log()
       console.log('waiting·······')

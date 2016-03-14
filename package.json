@@ -1,6 +1,6 @@
 {
   "name": "teto-tool",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "just a tool",
   "scripts": {
   },
@@ -17,7 +17,6 @@
     "download-git-repo": "^0.1.1",
     "jsonfile": "^2.2.3",
     "path": "^0.12.7",
-    "progress": "^1.1.8",
-    "prompt-for-patched": "^1.1.3"
+    "progress": "^1.1.8"
   }
 }
