@@ -1,0 +1,23 @@
+{
+  "name": "teto-tool",
+  "version": "1.0.0",
+  "description": "just a tool",
+  "scripts": {
+  },
+  "bin": {
+    "teto": "bin/teto.js"
+  },
+  "author": "kingsongao1221@gmail.com",
+  "license": "MIT",
+  "dependencies": {
+    "chalk": "^1.1.1",
+    "co": "^4.6.0",
+    "co-prompt": "^1.0.0",
+    "commander": "^2.9.0",
+    "download-git-repo": "^0.1.1",
+    "jsonfile": "^2.2.3",
+    "path": "^0.12.7",
+    "progress": "^1.1.8",
+    "prompt-for-patched": "^1.1.3"
+  }
+}
