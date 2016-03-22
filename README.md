@@ -9,7 +9,7 @@ $ npm install teto-tool -g
 ## Use
 
 ```bash
-$ teto init demo [source]
+$ teto init [demo] [source]
 ```
 Source: {gitUsername}/{repo}
 

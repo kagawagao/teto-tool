@@ -17,7 +17,7 @@ var exists = fs.existsSync
  */
 
 program
-  .usage('<project-name> [source-name]')
+  .usage('[project-name] [source-name]')
 
 /**
  * Help
@@ -60,8 +60,12 @@ var sourceName = 'tetojs/teto.js'
 if (program.args[1]) {
   sourceName = program.args[1]
 }
-console.log(chalk.yellow('You are creating a new project named %s from %s'),
-  rawName, sourceName)
+if (rawName) {
+  console.log(chalk.yellow('You are creating a new project named %s based on %s'),
+    rawName, sourceName)
+} else {
+  console.log(chalk.yellow('You are creating a new project based on %s'), sourceName)
+}
 run()
 
 
@@ -79,7 +83,7 @@ function run() {
     if (err) {
       throw err
     }
-    console.log('Download success!!!')
+    console.log(chalk.yellow('Download success!!!'))
     writePackageJSON()
   })
 }
@@ -91,14 +95,15 @@ function run() {
 function writePackageJSON() {
   var filepath = process.cwd() + '/package.json'
   var pkg = require(filepath)
+  var projectName = rawName || sourceName
   co(function*() {
-    pkg.name = yield coPrompt('name(' + rawName + '):')
+    pkg.name = yield coPrompt('name(' + projectName + '):')
     if (!pkg.name) {
-      pkg.name = rawName
+      pkg.name = projectName
     }
     pkg.version = yield coPrompt('version(0.0.0):')
     if (!pkg.version) {
-      pkg.name = '0.0.0'
+      pkg.version = '0.0.0'
     }
     pkg.description = yield coPrompt('description:')
     jsonfile.writeFile(filepath, pkg, {
@@ -120,13 +125,12 @@ function writePackageJSON() {
       }
       if (answers.ok) {
         console.log()
-        console.log('waiting·······')
+        console.log(chalk.yellow('waiting·······'))
         console.log()
         exec('npm install')
         console.log()
-        console.log('Install packages success!!!')
       } else {
-        console.log('Success!!!')
+        console.log(chalk.yellow('Success!!!'))
       }
     })
   })
