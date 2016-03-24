@@ -1,4 +1,6 @@
 # teto-tool
+## 1.0.6
+Fix arguments error, if option has `/`, handle it as source name
 ## 1.0.5
 Project name is no longer necessary parameters
 ## 1.0.4

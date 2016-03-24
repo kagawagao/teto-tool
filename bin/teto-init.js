@@ -60,6 +60,10 @@ var sourceName = 'tetojs/teto.js'
 if (program.args[1]) {
   sourceName = program.args[1]
 }
+if (rawName.indexOf('/') !== -1) {
+  sourceName = rawName
+  rawName = undefined
+}
 if (rawName) {
   console.log(chalk.yellow('You are creating a new project named %s based on %s'),
     rawName, sourceName)

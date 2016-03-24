@@ -8,5 +8,6 @@ var program = require('commander')
 program
   .version(require('../package').version)
   .usage('<command> [options]')
-  .command('init', 'create a new project from teto')
+  .command('init', 'create a new project from a repository')
+  .command('list', 'list recommend repository')
   .parse(process.argv)
