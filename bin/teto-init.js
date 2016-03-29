@@ -37,9 +37,9 @@ program.on('--help', function() {
 })
 
 program.parse(process.argv)
-if (program.args.length < 1) {
-  return program.help()
-}
+// if (program.args.length < 1) {
+//   return program.help()
+// }
 
 
 /**
