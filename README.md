@@ -19,7 +19,7 @@ Source: {gitUsername}/{repo}
 
 You can specify a repository to create a new project, the default repository is [tetojs/teto.js](https://github.com/tetojs/teto.js)
 
-- list some template
+- list some templates
 
 ```bash
 $ teto list
