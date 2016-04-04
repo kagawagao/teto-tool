@@ -53,6 +53,10 @@ if (!path_src || !path_i18n || !languages || !i18n_helper) {
   console.log(chalk.red('Your config maybe wrong, please check!'))
   process.exit(0)
 }
+if (!Array.isArray(languages)) {
+  console.log(chalk.red('languages must be an array, please check!'))
+  process.exit(0)
+}
 console.log(chalk.yellow('Your config:'))
 console.log()
 console.log(chalk.yellow('  i18n_helper: ', i18n_helper))

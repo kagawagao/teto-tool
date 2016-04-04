@@ -30,8 +30,27 @@ $ teto list
 ```bash
 $ teto i18n
 ```
+## How to use `$ teto i18n`?
 
-## Which repository can be used
+You just need to create a file named as `.i18n` in your project root path, config like this:
+
+```javascript
+{
+  "path_src": "src",
+  "path_i18n": "src/i18n",
+  "languages": ["zh-CN", "en-US", "th"],
+  "include_files": [".js", ".jsx"],
+  "i18n_helper": "i18n"
+}
+```
+Explanations:
+- path_src: Your source file's path, generally, it is a relative path
+- path_i18n: The path you place the i18n JSON files
+- languages: languages
+- include_files: files extention, if you do not set it, it will find all the files under the path_src
+- i18n_helper: a symbol to mark the string which should be translated, like: i18n('xxxx')
+
+## Which repository can be used?
 
 Generally, you can use any one as your template, but we recommend following these:
 
