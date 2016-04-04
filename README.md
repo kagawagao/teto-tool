@@ -25,6 +25,12 @@ You can specify a repository to create a new project, the default repository is 
 $ teto list
 ```
 
+- get text to be translated
+
+```bash
+$ teto i18n
+```
+
 ## Which repository can be used
 
 Generally, you can use any one as your template, but we recommend following these:

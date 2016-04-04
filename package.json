@@ -1,12 +1,16 @@
 {
   "name": "teto-tool",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "just a tool",
   "scripts": {},
   "bin": {
     "teto": "bin/teto.js"
   },
   "author": "kingsongao1221@gmail.com",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kagawagao/teto-tool.git"
+  },
   "license": "MIT",
   "dependencies": {
     "chalk": "^1.1.1",
@@ -14,7 +18,7 @@
     "co-prompt": "^1.0.0",
     "commander": "^2.9.0",
     "download-git-repo": "^0.1.1",
-    "jsonfile": "^2.2.3",
+    "fs-extra": "^0.26.7",
     "path": "^0.12.7",
     "progress": "^1.1.8",
     "prompt-for-patched": "^1.1.3"

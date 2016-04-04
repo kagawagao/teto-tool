@@ -1,4 +1,4 @@
-#!/usr/bin/env node
+#!/usr/bin/env node --harmony
 var program = require('commander')
 
 /**
@@ -10,4 +10,5 @@ program
   .usage('<command> [options]')
   .command('init', 'create a new project from a repository')
   .command('list', 'list recommend repository')
+  .command('i18n', 'get text to be translated')
   .parse(process.argv)

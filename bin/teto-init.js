@@ -2,15 +2,13 @@
 
 var download = require('download-git-repo')
 var program = require('commander')
-var fs = require('fs')
+var fs = require('fs-extra')
 var path = require('path')
 var chalk = require('chalk')
-var jsonfile = require('jsonfile')
 var co = require('co')
 var coPrompt = require('co-prompt')
 var exec = require('child_process').execSync
 var prompt = require('prompt-for-patched')
-var exists = fs.existsSync
 
 /**
  * Usage
@@ -110,7 +108,7 @@ function writePackageJSON() {
       pkg.version = '0.0.0'
     }
     pkg.description = yield coPrompt('description:')
-    jsonfile.writeFile(filepath, pkg, {
+    fs.writeJsonSync(filepath, pkg, {
       spaces: 2
     }, function(err) {
       if (err) {
