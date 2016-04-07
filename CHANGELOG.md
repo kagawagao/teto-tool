@@ -1,4 +1,6 @@
 # teto-tool
+## 1.0.10
+fix bug
 ## 1.0.8
 Add command: `$ teto i18n`
 ## 1.0.6

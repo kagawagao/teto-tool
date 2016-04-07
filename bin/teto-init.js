@@ -58,7 +58,7 @@ var sourceName = 'tetojs/teto.js'
 if (program.args[1]) {
   sourceName = program.args[1]
 }
-if (rawName.indexOf('/') !== -1) {
+if (rawName && rawName.indexOf('/') !== -1) {
   sourceName = rawName
   rawName = undefined
 }
