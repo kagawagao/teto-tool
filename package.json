@@ -4,7 +4,10 @@
   "description": "just a tool",
   "scripts": {},
   "bin": {
-    "teto": "bin/teto.js"
+    "teto": "bin/teto.js",
+    "preversion": "",
+    "version": "git add -A",
+    "postversion": "git push && git push --tags"
   },
   "author": "kingsongao1221@gmail.com",
   "repository": {

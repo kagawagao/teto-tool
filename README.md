@@ -40,7 +40,8 @@ You just need to create a file named as `.i18n` in your project root path, confi
   "path_i18n": "src/i18n",
   "languages": ["zh-CN", "en-US", "th"],
   "include_files": [".js", ".jsx"],
-  "i18n_helper": "i18n"
+  "i18n_helper": "i18n",
+  "default_data": "src/error.json"
 }
 ```
 Explanations:
@@ -49,6 +50,7 @@ Explanations:
 - languages: languages
 - include_files: files extention, if you do not set it, it will find all the files under the path_src
 - i18n_helper: a symbol to mark the string which should be translated, like: i18n('xxxx')
+- default_data: default data, it can be an object or a file path
 
 ## Which repository can be used?
 

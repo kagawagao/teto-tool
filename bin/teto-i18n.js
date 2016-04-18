@@ -120,11 +120,11 @@ readAllFiles(rootPath + '/' + path_src, function(err, files) {
   })
   translateFiles.map(function(file, index) {
     var contents = fs.readFileSync(file, 'utf8')
-    var reg = new RegExp(i18n_helper + '\\((((\'(.+?)\'))|(("(.+?))"))\\)', 'gm')
+    var reg = new RegExp(i18n_helper + '\\((((\'.+?))|((".+?)))\\)', 'gm')
     var matched = contents.match(reg)
     if (matched) {
       matched.map(function(item, index) {
-        var key = item.replace(i18n_helper, '').replace(/\(((')|("))/, '').replace(/((')|("))\)/, '')
+        var key = item.match(/('.+?')|(".+?")/)[0].replace(/'|"/gm, '')
         languages.map(function(language) {
           if (!translateData[language].hasOwnProperty(key)) {
             translateData[language][key] = key
