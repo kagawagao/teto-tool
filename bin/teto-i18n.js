@@ -45,26 +45,40 @@ var languages = config.languages
 var include_files = config.include_files
 var exclude_files = config.exclude_files
 var i18n_helper = config.i18n_helper
-// var default_data = config.default_data
-// if (typeof default_data === 'string') {
-//   default_data =
-// }
+var default_data = config.default_data || {}
+// var default_language config.default_language
+
+if (typeof default_data === 'string') {
+   try {
+     default_data = fs.readJsonSync(rootPath + '/' + default_data)
+   } catch (e) {
+     default_data = {}
+     console.log(chalk.red('Cannot find default data in ' + default_data + ', it will be an empty object'))
+   }
+} else if (Array.isArray(default_data) || typeof default_data === 'function') {
+  console.log(chalk.red('Default data must be an object or a file path, please check!'))
+}
+
 if (!path_src || !path_i18n || !languages || !i18n_helper) {
   console.log(chalk.red('Your config maybe wrong, please check!'))
   process.exit(0)
 }
-if (!Array.isArray(languages)) {
-  console.log(chalk.red('languages must be an array, please check!'))
+if (!Array.isArray(languages) || languages.length === 0) {
+  console.log(chalk.red('languages must be an array and it\'s length cannot less than 1, please check!'))
   process.exit(0)
 }
+
+// default_language = default_language || languages[0]
+
 console.log(chalk.yellow('Your config:'))
 console.log()
-console.log(chalk.yellow('  i18n_helper: ', i18n_helper))
-console.log(chalk.yellow('  path_src: ', path_src))
-console.log(chalk.yellow('  path_i18n: ', path_i18n))
-console.log(chalk.yellow('  languages: ', languages.join(' ')))
+console.log(chalk.yellow('  i18n_helper     : ', i18n_helper))
+console.log(chalk.yellow('  path_src        : ', path_src))
+console.log(chalk.yellow('  path_i18n       : ', path_i18n))
+console.log(chalk.yellow('  languages       : ', languages.join(' ')))
+// console.log(chalk.yellow('  default_language: ', default_language))
 if (include_files) {
-  console.log(chalk.yellow('  include_files: ', include_files.join(' ')))
+  console.log(chalk.yellow('  include_files   : ', include_files.join(' ')))
 }
 console.log()
 console.log(chalk.yellow('start now ~~~'))
@@ -79,6 +93,11 @@ languages.map(function(language) {
     if (!translateData[language]) {
       translateData[language] = {}
     }
+    Object.keys(default_data).map(key => {
+      if (!translateData[language].hasOwnProperty(key)) {
+        translateData[language][key] = default_data[key]
+      }
+    })
   } catch (e) {
     console.dir(e)
   }
@@ -101,11 +120,11 @@ readAllFiles(rootPath + '/' + path_src, function(err, files) {
   })
   translateFiles.map(function(file, index) {
     var contents = fs.readFileSync(file, 'utf8')
-    var reg = new RegExp("i18n\\(((('(.+?)'))|((\"(.+?))\"))\\)", 'gm')
+    var reg = new RegExp(i18n_helper + '\\((((\'(.+?)\'))|(("(.+?))"))\\)', 'gm')
     var matched = contents.match(reg)
     if (matched) {
       matched.map(function(item, index) {
-        var key = item.replace(/i18n\(((')|("))/, '').replace(/((')|("))\)/, '')
+        var key = item.replace(i18n_helper, '').replace(/\(((')|("))/, '').replace(/((')|("))\)/, '')
         languages.map(function(language) {
           if (!translateData[language].hasOwnProperty(key)) {
             translateData[language][key] = key
