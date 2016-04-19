@@ -1,13 +1,10 @@
 {
   "name": "teto-tool",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "just a tool",
   "scripts": {},
   "bin": {
-    "teto": "bin/teto.js",
-    "preversion": "",
-    "version": "git add -A",
-    "postversion": "git push && git push --tags"
+    "teto": "bin/teto.js"
   },
   "author": "kingsongao1221@gmail.com",
   "repository": {

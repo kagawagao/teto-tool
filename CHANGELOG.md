@@ -1,4 +1,6 @@
 # teto-tool
+## 1.1.2
+fix bug
 ## 1.1.1
 Support params
 ## 1.1.0
