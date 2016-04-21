@@ -85,6 +85,7 @@ console.log(chalk.yellow('start now ~~~'))
 console.log()
 var date = Date.now()
 var translateData = {}
+var keys = []
 languages.map(function(language) {
   var distFilePath = rootPath + '/' + path_i18n + '/' + language + '.json'
   try {
@@ -94,6 +95,7 @@ languages.map(function(language) {
       translateData[language] = {}
     }
     Object.keys(default_data).map(key => {
+      keys.push(key)
       if (!translateData[language].hasOwnProperty(key)) {
         translateData[language][key] = default_data[key]
       }
@@ -106,6 +108,7 @@ languages.map(function(language) {
 readAllFiles(rootPath + '/' + path_src, function(err, files) {
   if (err) {
     console.dir(err)
+    console.log()
     console.log(chalk.red('There is something wrong, please check!'))
     process.exit(0)
   }
@@ -126,12 +129,22 @@ readAllFiles(rootPath + '/' + path_src, function(err, files) {
       matched.map(function(item, index) {
         var key = item.match(/('.+?')|(".+?")/)[0].replace(/'|"/gm, '')
         languages.map(function(language) {
+          if (keys.indexOf(key) === -1) {
+            keys.push(key)
+          }
           if (!translateData[language].hasOwnProperty(key)) {
             translateData[language][key] = key
           }
         })
       })
     }
+  })
+  languages.map(function(language) {
+    Object.keys(translateData[language]).map(function(key) {
+      if (keys.indexOf(key) === -1) {
+        delete translateData[language][key]
+      }
+    })
   })
   languages.map(function(language) {
     var distFilePath = rootPath + '/' + path_i18n + '/' + language + '.json'
