@@ -1,4 +1,6 @@
 # teto-tool
+## 1.1.4
+upgrade dependencies
 ## 1.1.3
 fix bug
 ## 1.1.2
