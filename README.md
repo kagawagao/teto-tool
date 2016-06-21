@@ -61,6 +61,10 @@ Generally, you can use any one as your template, but we recommend following thes
   - [tetojs/teto.js](https://github.com/tetojs/teto.js)
   - [davezuko/react-redux-starter-kit](https://github.com/davezuko/react-redux-starter-kit)
 
+- ### Vue-Vuex
+  
+  - [crossjs/plato](https://github.com/crossjs/plato)
+
 - ### ND-Front
 
   - comming soon ~~~
