@@ -89,14 +89,16 @@ console.log()
 var start = Date.now()
 var translateData = {}
 var keys = []
+
 languages.map(function(language) {
   var distFilePath = path.resolve(rootPath, path_i18n, language + '.json')
   try {
     fs.ensureFileSync(distFilePath)
-    translateData[language] = flattern(fs.readJsonSync(distFilePath, {throws: false}))
+    translateData[language] = fs.readJsonSync(distFilePath, {throws: false})
     if (!translateData[language]) {
       translateData[language] = {}
     }
+    translateData[language] = flattern(translateData[language])
     default_data = flattern(default_data)
     Object.keys(default_data).map(key => {
       keys.push(key)
