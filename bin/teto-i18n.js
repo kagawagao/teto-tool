@@ -155,7 +155,7 @@ function readDir(dir) {
 
 function hanldeFile(file) {
   var contents = fs.readFileSync(file, 'utf8')
-  var reg = new RegExp(i18n_helper + '\\((((\'.+?))|((".+?)))\\)', 'gm')
+  var reg = new RegExp(i18n_helper + '\\((((\'.+?\'))|((".+?")))', 'gm')
   var matched = contents.match(reg)
   if (matched) {
     matched.map(function(item) {
