@@ -1,4 +1,5 @@
 # teto-tool
+[![npm](https://img.shields.io/npm/v/teto-tool.svg)](https://www.npmjs.com/package/teto-tool)
 
 A tool, but more
 
