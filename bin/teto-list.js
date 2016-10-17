@@ -15,6 +15,8 @@ process.on('exit', function () {
  * List repos.
  */
 
+console.log(chalk.yellow('crossjs/plato'))
+console.log()
 console.log(chalk.yellow('tetojs/teto.js'))
 console.log()
 console.log(chalk.yellow('davezuko/react-redux-starter-kit'))

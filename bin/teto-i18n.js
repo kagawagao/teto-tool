@@ -4,6 +4,9 @@ var chalk = require('chalk')
 var path = require('path')
 var fs = require('fs-extra')
 var rootPath = process.cwd()
+var flattern = require('flat')
+var unflatten = require('flat').unflatten
+var sortObecjt = require('deep-sort-object')
 
 /**
 ** Padding.
@@ -20,7 +23,7 @@ process.on('exit', function () {
 **/
 
 try {
-  fs.close(fs.openSync(rootPath + '/package.json', 'r'))
+  fs.close(fs.openSync(path.resolve(rootPath, 'package.json'), 'r'))
 } catch (e) {
   console.dir(e)
   console.log(chalk.red('Cannot find package.json, please check your file path!'))
@@ -33,7 +36,7 @@ try {
 **/
 var config
 try {
-  var config = fs.readJsonSync(rootPath + '/.i18n')
+  var config = fs.readJsonSync(path.resolve(rootPath, '.i18n'))
 } catch (e) {
   console.dir(e)
   console.log(chalk.red('Cannot find config file named as .i18n, please check!'))
@@ -50,7 +53,7 @@ var default_data = config.default_data || {}
 
 if (typeof default_data === 'string') {
    try {
-     default_data = fs.readJsonSync(rootPath + '/' + default_data)
+     default_data = fs.readJsonSync(path.resolve(rootPath, default_data))
    } catch (e) {
      default_data = {}
      console.log(chalk.red('Cannot find default data in ' + default_data + ', it will be an empty object'))
@@ -83,17 +86,18 @@ if (include_files) {
 console.log()
 console.log(chalk.yellow('start now ~~~'))
 console.log()
-var date = Date.now()
+var start = Date.now()
 var translateData = {}
 var keys = []
 languages.map(function(language) {
-  var distFilePath = rootPath + '/' + path_i18n + '/' + language + '.json'
+  var distFilePath = path.resolve(rootPath, path_i18n, language + '.json')
   try {
     fs.ensureFileSync(distFilePath)
-    translateData[language] = fs.readJsonSync(distFilePath, {throws: false})
+    translateData[language] = flattern(fs.readJsonSync(distFilePath, {throws: false}))
     if (!translateData[language]) {
       translateData[language] = {}
     }
+    default_data = flattern(default_data)
     Object.keys(default_data).map(key => {
       keys.push(key)
       if (!translateData[language].hasOwnProperty(key)) {
@@ -105,82 +109,65 @@ languages.map(function(language) {
   }
 })
 
-readAllFiles(rootPath + '/' + path_src, function(err, files) {
-  if (err) {
-    console.dir(err)
-    console.log()
-    console.log(chalk.red('There is something wrong, please check!'))
-    process.exit(0)
-  }
-  var translateFiles = []
-  files.map(function(file, index) {
-    if (include_files) {
-      var extname = path.extname(file)
-      if (include_files.indexOf(extname) !== -1) {
-        translateFiles.push(file)
-      }
+readDir(path.resolve(rootPath, path_src))
+
+languages.map(function(language) {
+  Object.keys(translateData[language]).map(function(key) {
+    if (keys.indexOf(key) === -1) {
+      delete translateData[language][key]
     }
   })
-  translateFiles.map(function(file, index) {
-    var contents = fs.readFileSync(file, 'utf8')
-    var reg = new RegExp(i18n_helper + '\\((((\'.+?))|((".+?)))\\)', 'gm')
-    var matched = contents.match(reg)
-    if (matched) {
-      matched.map(function(item, index) {
-        var key = item.match(/('.+?')|(".+?")/)[0].replace(/'|"/gm, '')
-        languages.map(function(language) {
-          if (keys.indexOf(key) === -1) {
-            keys.push(key)
-          }
-          if (!translateData[language].hasOwnProperty(key)) {
-            translateData[language][key] = key
-          }
-        })
-      })
-    }
-  })
-  languages.map(function(language) {
-    Object.keys(translateData[language]).map(function(key) {
-      if (keys.indexOf(key) === -1) {
-        delete translateData[language][key]
-      }
-    })
-  })
-  languages.map(function(language) {
-    var distFilePath = rootPath + '/' + path_i18n + '/' + language + '.json'
-    fs.writeJsonSync(distFilePath, translateData[language], {spaces: 2}, function(err) {
-      if (err) {
-        console.dir(err)
-        process.exit(0)
-      }
-    })
-  })
-  var time = (Date.now() - date) / 1000
-  console.log(chalk.yellow('Done in ' + time + 'ms!!!'))
 })
+
+languages.map(function(language) {
+  var distFilePath = path.resolve(rootPath, path_i18n, language + '.json')
+  fs.writeJsonSync(distFilePath, sortObecjt(unflatten(translateData[language])), {spaces: 2}, function(err) {
+    if (err) {
+      console.dir(err)
+      process.exit(0)
+    }
+  })
+})
+
+var time = (Date.now() - start) / 1000
+console.log(chalk.yellow('Done in ' + time + 'ms!!!'))
 
 /**
 ** get all files in path_src.
 **/
-function readAllFiles(dir, callback) {
-  var results = []
-  fs.readdir(dir, function(err, list) {
-    if (err) return callback(err)
-    var pending = list.length
-    if (!pending) return callback(null, results)
-    list.forEach(function(file) {
-      file = path.resolve(dir, file)
-      fs.stat(file, function(err, stat) {
-        if (stat && stat.isDirectory()) {
-          readAllFiles(file, function(err, res) {
-            results = results.concat(res)
-            if (!--pending) callback(null, results)
-          });
-        } else {
-          results.push(file);
-          if (!--pending) callback(null, results)
+function readDir(dir) {
+  var list = fs.readdirSync(dir)
+  list.forEach(function(file) {
+    file = path.resolve(dir, file)
+    stat = fs.statSync(file)
+    if (stat && stat.isDirectory()) {
+      readDir(file)
+    } else {
+      if (include_files) {
+        var extname = path.extname(file)
+        if (include_files.indexOf(extname) !== -1) {
+          hanldeFile(file)
+        }
+      }
+    }
+  })
+}
+
+function hanldeFile(file) {
+  var contents = fs.readFileSync(file, 'utf8')
+  var reg = new RegExp(i18n_helper + '\\((((\'.+?))|((".+?)))\\)', 'gm')
+  var matched = contents.match(reg)
+  if (matched) {
+    matched.map(function(item) {
+      var key = item.match(/('.+?')|(".+?")/)[0].replace(/'|"/gm, '')
+      languages.map(function(language) {
+        if (keys.indexOf(key) === -1) {
+          keys.push(key)
+        }
+        if (!translateData[language].hasOwnProperty(key)) {
+          translateData[language][key] = key
         }
       })
     })
-  })
+  }
 }

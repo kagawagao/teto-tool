@@ -1,6 +1,6 @@
 # teto-tool
 
-A tool for teto.js, but more
+A tool, but more
 
 ## Install
 
@@ -17,7 +17,7 @@ $ teto init [dest] [source]
 ```
 Source: {gitUsername}/{repo}
 
-You can specify a repository to create a new project, the default repository is [tetojs/teto.js](https://github.com/tetojs/teto.js)
+You can specify a repository to create a new project, the default repository is [crossjs/plato](https://github.com/crossjs/plato)
 
 - list some templates
 
@@ -62,7 +62,7 @@ Generally, you can use any one as your template, but we recommend following thes
   - [davezuko/react-redux-starter-kit](https://github.com/davezuko/react-redux-starter-kit)
 
 - ### Vue-Vuex
-  
+
   - [crossjs/plato](https://github.com/crossjs/plato)
 
 - ### ND-Front

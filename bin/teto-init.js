@@ -24,13 +24,13 @@ program
 program.on('--help', function() {
   console.log('  Examples:')
   console.log()
-  console.log(chalk.yellow('  #create a new project with teto'))
-  console.log('   $ teto init smart-india   ')
+  console.log(chalk.yellow('  #create a new project with crossjs/plato'))
+  console.log('   $ teto init my-project   ')
   console.log()
   console.log(chalk.yellow(
     '  #create a new project with another github repo'))
   console.log(
-    '   $ teto init smart-india davezuko/react-redux-starter-kit   ')
+    '  $ teto init smart-india davezuko/react-redux-starter-kit   ')
   console.log()
 })
 
@@ -54,7 +54,7 @@ process.on('exit', function() {
  */
 
 var rawName = program.args[0]
-var sourceName = 'tetojs/teto.js'
+var sourceName = 'crossjs/plato'
 if (program.args[1]) {
   sourceName = program.args[1]
 }
