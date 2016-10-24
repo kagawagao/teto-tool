@@ -18,7 +18,7 @@ $ npm install teto-tool -g
 ```bash
 $ teto init [dest] [source]
 ```
-Source: {gitUsername}/{repo}
+Source: {gitUsername}/{repo}, you can find more in [download-git-repo](https://github.com/flipxfx/download-git-repo)
 
 You can specify a repository to create a new project, the default repository is [crossjs/plato](https://github.com/crossjs/plato)
 
