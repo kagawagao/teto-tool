@@ -1,4 +1,4 @@
-# teto-tool
+# teto-tool ⚒
 
 [![npm](https://img.shields.io/npm/v/teto-tool.svg)](https://www.npmjs.com/package/teto-tool)
 [![license](https://img.shields.io/npm/l/teto-tool.svg)](https://github.com/kagawagao/teto-tool/blob/master/LICENSE)
