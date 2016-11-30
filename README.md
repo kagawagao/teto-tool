@@ -67,7 +67,3 @@ Generally, you can use any one as your template, but we recommend following thes
 - ### Vue-Vuex
 
   - [crossjs/plato](https://github.com/crossjs/plato)
-
-- ### ND-Front
-
-  - comming soon ~~~
