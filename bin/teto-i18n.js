@@ -102,11 +102,9 @@ languages.map(function(language) {
     default_data = flattern(default_data)
     Object.keys(default_data).map(key => {
       keys.push(key)
-      // if (!translateData[language].hasOwnProperty(key)) {
-      //   translateData[language][key] = default_data[key]
-      // }
-      // alway kepp new
-      translateData[language][key] = default_data[key]
+      if (!translateData[language].hasOwnProperty(key)) {
+        translateData[language][key] = default_data[key]
+      }
     })
   } catch (e) {
     console.dir(e)
@@ -168,11 +166,9 @@ function hanldeFile(file) {
         if (keys.indexOf(key) === -1) {
           keys.push(key)
         }
-        // if (!translateData[language].hasOwnProperty(key)) {
-        //   translateData[language][key] = key
-        // }
-        // always keep new
-        translateData[language][key] = key
+        if (!translateData[language].hasOwnProperty(key)) {
+          translateData[language][key] = key
+        }
       })
     })
   }
