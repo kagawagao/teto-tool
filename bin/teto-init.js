@@ -9,6 +9,7 @@ var co = require('co')
 var coPrompt = require('co-prompt')
 var exec = require('child_process').execSync
 var prompt = require('prompt-for-patched')
+var isEmptyDir = require('./utils/helpers').isEmptyDir
 
 /**
  * Usage
@@ -55,6 +56,7 @@ process.on('exit', function() {
 
 var rawName = program.args[0]
 var sourceName = 'crossjs/plato'
+var dest = process.cwd()
 if (program.args[1]) {
   sourceName = program.args[1]
 }
@@ -76,8 +78,20 @@ run()
  */
 
 function run() {
-  var currentPath = process.cwd()
-  var dest = './'
+  if (!isEmptyDir(dest)) {
+    console.log()
+    console.log(chalk.blue('Current directory is not empty, project will created as a child directory named as %s'), rawName || sourceName)
+    dest += '/'
+    dest += rawName || sourceName
+  } else {
+    console.log()
+    console.log(chalk.blue('Current directory is empty, project will be created in current directory'))
+  }
+  if (fs.existsSync(dest)) {
+    throw new Error('directory exist, please check')
+    process.exit(1)
+  }
+  console.log()
   console.log(chalk.yellow('Downloading······'))
   download(sourceName, dest, {
     clone: false
@@ -95,19 +109,19 @@ function run() {
  */
 
 function writePackageJSON() {
-  var filepath = process.cwd() + '/package.json'
+  var filepath = dest + '/package.json'
   var pkg = require(filepath)
   var projectName = rawName || sourceName
   co(function*() {
-    pkg.name = yield coPrompt('name(' + projectName + '):')
+    pkg.name = yield coPrompt('name(' + projectName + '): ')
     if (!pkg.name) {
       pkg.name = projectName
     }
-    pkg.version = yield coPrompt('version(0.0.0):')
+    pkg.version = yield coPrompt('version(0.0.0): ')
     if (!pkg.version) {
       pkg.version = '0.0.0'
     }
-    pkg.description = yield coPrompt('description:')
+    pkg.description = yield coPrompt('description: ')
     fs.writeJsonSync(filepath, pkg, {
       spaces: 2
     }, function(err) {
@@ -119,7 +133,7 @@ function writePackageJSON() {
       ok: {
         type: 'boolean',
         default: true,
-        label: 'install packages now?'
+        label: 'install packages now ? '
       }
     }, function(err, answers) {
       if (err) {
