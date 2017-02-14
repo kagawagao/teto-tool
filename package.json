@@ -1,6 +1,6 @@
 {
   "name": "teto-tool",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "description": "just a tool",
   "scripts": {
     "build": "babel src -d bin"
@@ -37,7 +37,7 @@
     "eslint-plugin-standard": "^2.0.1"
   },
   "engines": {
-    "node": ">= 4",
-    "npm": ">= 3"
+    "node": ">= 6.4.0",
+    "npm": ">= 3.10.0"
   }
 }
