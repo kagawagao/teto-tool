@@ -1,15 +1,14 @@
 #!/usr/bin/env node --harmony
 
-var download = require('download-git-repo')
-var program = require('commander')
-var fs = require('fs-extra')
-var path = require('path')
-var chalk = require('chalk')
-var co = require('co')
-var coPrompt = require('co-prompt')
-var exec = require('child_process').execSync
-var prompt = require('prompt-for-patched')
-var isEmptyDir = require('./utils/helpers').isEmptyDir
+import download from 'download-git-repo'
+import program from 'commander'
+import fs from 'fs-extra'
+import chalk from 'chalk'
+import co from 'co'
+import coPrompt from 'co-prompt'
+import {execSync as exec} from 'child_process'
+import prompt from 'prompt-for-patched'
+import {isEmptyDir} from './utils/helpers'
 
 /**
  * Usage
@@ -22,7 +21,7 @@ program
  * Help
  */
 
-program.on('--help', function() {
+program.on('--help', () => {
   console.log('  Examples:')
   console.log()
   console.log(chalk.yellow('  #create a new project with crossjs/plato'))
@@ -40,13 +39,12 @@ program.parse(process.argv)
 //   return program.help()
 // }
 
-
 /**
  * Padding
  */
 
 console.log()
-process.on('exit', function() {
+process.on('exit', () => {
   console.log()
 })
 
@@ -54,9 +52,9 @@ process.on('exit', function() {
  * Setting
  */
 
-var rawName = program.args[0]
-var sourceName = 'crossjs/plato'
-var dest = process.cwd()
+let rawName = program.args[0]
+let sourceName = 'crossjs/plato'
+let dest = process.cwd()
 if (program.args[1]) {
   sourceName = program.args[1]
 }
@@ -72,12 +70,11 @@ if (rawName) {
 }
 run()
 
-
 /**
  * Clone
  */
 
-function run() {
+function run () {
   if (!isEmptyDir(dest)) {
     console.log()
     console.log(chalk.blue('Current directory is not empty, project will created as a child directory named as %s'), rawName || sourceName)
@@ -89,13 +86,12 @@ function run() {
   }
   if (fs.existsSync(dest)) {
     throw new Error('directory exist, please check')
-    process.exit(1)
   }
   console.log()
   console.log(chalk.yellow('Downloading······'))
   download(sourceName, dest, {
     clone: false
-  }, function(err) {
+  }, (err) => {
     if (err) {
       throw err
     }
@@ -108,10 +104,10 @@ function run() {
  * Write
  */
 
-function writePackageJSON() {
-  var filepath = dest + '/package.json'
-  var pkg = require(filepath)
-  var projectName = rawName || sourceName
+function writePackageJSON () {
+  const filepath = dest + '/package.json'
+  const pkg = require(filepath)
+  const projectName = rawName || sourceName
   co(function*() {
     pkg.name = yield coPrompt('name(' + projectName + '): ')
     if (!pkg.name) {
@@ -124,7 +120,7 @@ function writePackageJSON() {
     pkg.description = yield coPrompt('description: ')
     fs.writeJsonSync(filepath, pkg, {
       spaces: 2
-    }, function(err) {
+    }, (err) => {
       if (err) {
         throw err
       }
@@ -135,7 +131,7 @@ function writePackageJSON() {
         default: true,
         label: 'install packages now ? '
       }
-    }, function(err, answers) {
+    }, (err, answers) => {
       if (err) {
         throw err
       }

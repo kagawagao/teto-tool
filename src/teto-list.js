@@ -1,6 +1,6 @@
 #!/usr/bin/env node --harmony
 
-var chalk = require('chalk')
+import chalk from 'chalk'
 
 /**
  * Padding.

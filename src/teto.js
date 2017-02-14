@@ -1,12 +1,13 @@
 #!/usr/bin/env node --harmony
-var program = require('commander')
+import program from 'commander'
+import pkg from '../package.json'
 
 /**
  * Usage
  */
 
 program
-  .version(require('../package').version)
+  .version(pkg.version)
   .usage('<command> [options]')
   .command('init', 'create a new project from a repository')
   .command('list', 'list recommend repository')
