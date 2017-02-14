@@ -6,8 +6,8 @@ import fs from 'fs-extra'
 import chalk from 'chalk'
 import co from 'co'
 import coPrompt from 'co-prompt'
-import {execSync as exec} from 'child_process'
-import prompt from 'prompt-for-patched'
+// import {execSync as exec} from 'child_process'
+// import prompt from 'prompt-for-patched'
 import {isEmptyDir} from './utils/helpers'
 
 /**
@@ -124,26 +124,27 @@ function writePackageJSON () {
       if (err) {
         throw err
       }
+      console.log(chalk.yellow('Success!!!'))
     })
-    prompt({
-      ok: {
-        type: 'boolean',
-        default: true,
-        label: 'install packages now ? '
-      }
-    }, (err, answers) => {
-      if (err) {
-        throw err
-      }
-      if (answers.ok) {
-        console.log()
-        console.log(chalk.yellow('waiting·······'))
-        console.log()
-        exec('npm install')
-        console.log()
-      } else {
-        console.log(chalk.yellow('Success!!!'))
-      }
-    })
+    // prompt({
+    //   ok: {
+    //     type: 'boolean',
+    //     default: true,
+    //     label: 'install packages now ? '
+    //   }
+    // }, (err, answers) => {
+    //   if (err) {
+    //     throw err
+    //   }
+    //   if (answers.ok) {
+    //     console.log()
+    //     console.log(chalk.yellow('waiting·······'))
+    //     console.log()
+    //     exec('npm install')
+    //     console.log()
+    //   } else {
+    //     console.log(chalk.yellow('Success!!!'))
+    //   }
+    // })
   })
 }
