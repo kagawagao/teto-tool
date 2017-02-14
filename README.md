@@ -4,7 +4,7 @@
 [![license](https://img.shields.io/npm/l/teto-tool.svg)](https://github.com/kagawagao/teto-tool/blob/master/LICENSE)
 [![Build Status](https://travis-ci.org/kagawagao/teto-tool.svg?branch=master)](https://travis-ci.org/kagawagao/teto-tool)
 
-⚒ A tool, but more
+ A tool, but more
 
 ## Install
 
@@ -60,11 +60,11 @@ Explanations:
 
 Generally, you can use any one as your template, but we recommend following these:
 
-- ### React-Redux
+- React-Redux
 
   - [tetojs/teto.js](https://github.com/tetojs/teto.js)
   - [davezuko/react-redux-starter-kit](https://github.com/davezuko/react-redux-starter-kit)
 
-- ### Vue-Vuex
+- Vue-Vuex
 
   - [crossjs/plato](https://github.com/crossjs/plato)
