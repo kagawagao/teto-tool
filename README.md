@@ -2,6 +2,7 @@
 
 [![npm](https://img.shields.io/npm/v/teto-tool.svg)](https://www.npmjs.com/package/teto-tool)
 [![license](https://img.shields.io/npm/l/teto-tool.svg)](https://github.com/kagawagao/teto-tool/blob/master/LICENSE)
+[![Build Status](https://travis-ci.org/kagawagao/teto-tool.svg?branch=master)](https://travis-ci.org/kagawagao/teto-tool)
 
 ⚒ A tool, but more
 
