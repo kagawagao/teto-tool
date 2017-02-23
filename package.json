@@ -1,6 +1,6 @@
 {
   "name": "teto-tool",
-  "version": "2.2.4",
+  "version": "2.2.5",
   "description": "just a tool",
   "scripts": {
     "build": "babel src -d bin"
