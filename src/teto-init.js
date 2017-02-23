@@ -62,6 +62,7 @@ if (rawName && rawName.indexOf('/') !== -1) {
   sourceName = rawName
   rawName = undefined
 }
+let directoryName = sourceName.split('/')[1].split('#')[0]
 if (rawName) {
   console.log(chalk.yellow('You are creating a new project named %s based on %s'),
     rawName, sourceName)
@@ -77,9 +78,9 @@ run()
 function run () {
   if (!isEmptyDir(dest)) {
     console.log()
-    console.log(chalk.blue('Current directory is not empty, project will created as a child directory named as %s'), rawName || sourceName)
+    console.log(chalk.blue('Current directory is not empty, project will created as a child directory named as %s'), rawName || directoryName)
     dest += '/'
-    dest += rawName || sourceName
+    dest += rawName || directoryName
   } else {
     console.log()
     console.log(chalk.blue('Current directory is empty, project will be created in current directory'))
@@ -107,7 +108,7 @@ function run () {
 function writePackageJSON () {
   const filepath = dest + '/package.json'
   const pkg = require(filepath)
-  const projectName = rawName || sourceName
+  const projectName = rawName || directoryName
   co(function*() {
     pkg.name = yield coPrompt('name(' + projectName + '): ')
     if (!pkg.name) {
@@ -118,13 +119,14 @@ function writePackageJSON () {
       pkg.version = '0.0.0'
     }
     pkg.description = yield coPrompt('description: ')
-    fs.writeJsonSync(filepath, pkg, {
+    fs.writeJson(filepath, pkg, {
       spaces: 2
     }, (err) => {
       if (err) {
         throw err
       }
       console.log(chalk.yellow('Success!!!'))
+      process.exit(0)
     })
     // prompt({
     //   ok: {
