@@ -85,9 +85,9 @@ function run () {
     console.log()
     console.log(chalk.blue('Current directory is empty, project will be created in current directory'))
   }
-  if (fs.existsSync(dest)) {
-    throw new Error('directory exist, please check')
-  }
+  // if (fs.existsSync(dest)) {
+  //   throw new Error('directory exist, please check')
+  // }
   console.log()
   console.log(chalk.yellow('Downloading······'))
   download(sourceName, dest, {
