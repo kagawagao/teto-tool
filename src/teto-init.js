@@ -106,10 +106,10 @@ function run () {
  */
 
 function writePackageJSON () {
-  const filepath = dest + '/package.json'
-  const pkg = require(filepath)
+  const filePath = dest + '/package.json'
+  const pkg = require(filePath)
   const projectName = rawName || directoryName
-  co(function*() {
+  co(function * () {
     pkg.name = yield coPrompt('name(' + projectName + '): ')
     if (!pkg.name) {
       pkg.name = projectName
@@ -119,7 +119,7 @@ function writePackageJSON () {
       pkg.version = '0.0.0'
     }
     pkg.description = yield coPrompt('description: ')
-    fs.writeJson(filepath, pkg, {
+    fs.writeJson(filePath, pkg, {
       spaces: 2
     }, (err) => {
       if (err) {
