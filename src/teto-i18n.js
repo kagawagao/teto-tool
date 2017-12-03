@@ -3,10 +3,21 @@
 import chalk from 'chalk'
 import path from 'path'
 import fs from 'fs-extra'
+import program from 'commander'
 import flattern, {unflatten} from 'flat'
-import sortObecjt from 'deep-sort-object'
+import sortObject from 'deep-sort-object'
 
 const rootPath = process.cwd()
+
+/**
+ * Help
+ */
+
+program.on('--help', () => {
+  console.log(chalk.yellow('  --init: create a .i18n file in current path'))
+})
+
+program.parse(process.argv)
 
 /**
 ** Padding.
@@ -122,7 +133,7 @@ languages.map(function (language) {
 
 languages.map(function (language) {
   let distFilePath = path.resolve(rootPath, pathI18n, language + '.json')
-  fs.writeJsonSync(distFilePath, sortObecjt(unflatten(translateData[language])), {spaces: 2}, function (err) {
+  fs.writeJsonSync(distFilePath, sortObject(unflatten(translateData[language])), {spaces: 2}, function (err) {
     if (err) {
       console.dir(err)
       process.exit(0)

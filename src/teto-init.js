@@ -8,7 +8,7 @@ import co from 'co'
 import coPrompt from 'co-prompt'
 // import {execSync as exec} from 'child_process'
 // import prompt from 'prompt-for-patched'
-import {isEmptyDir} from './utils/helpers'
+import { isEmptyDir, isND } from './utils/helpers'
 
 /**
  * Usage
@@ -48,28 +48,35 @@ process.on('exit', () => {
   console.log()
 })
 
-/**
- * Setting
- */
-
 let rawName = program.args[0]
 let sourceName = 'crossjs/plato'
 let dest = process.cwd()
-if (program.args[1]) {
-  sourceName = program.args[1]
+let directoryName = ''
+/**
+ * start
+ */
+async function start () {
+  if (await isND()) {
+    sourceName = 'gitlab:http://git.sdp.nd:fed/ae-boilerplate'
+  }
+  if (program.args[1]) {
+    sourceName = program.args[1]
+  }
+  if (rawName && rawName.indexOf('/') !== -1) {
+    sourceName = rawName
+    rawName = undefined
+  }
+
+  directoryName = sourceName.split('/')[1].split('#')[0]
+
+  if (rawName) {
+    console.log(chalk.yellow('You are creating a new project named %s based on %s'),
+      rawName, sourceName)
+  } else {
+    console.log(chalk.yellow('You are creating a new project based on %s'), sourceName)
+  }
+  run()
 }
-if (rawName && rawName.indexOf('/') !== -1) {
-  sourceName = rawName
-  rawName = undefined
-}
-let directoryName = sourceName.split('/')[1].split('#')[0]
-if (rawName) {
-  console.log(chalk.yellow('You are creating a new project named %s based on %s'),
-    rawName, sourceName)
-} else {
-  console.log(chalk.yellow('You are creating a new project based on %s'), sourceName)
-}
-run()
 
 /**
  * Clone
@@ -150,3 +157,5 @@ function writePackageJSON () {
     // })
   })
 }
+
+start()
