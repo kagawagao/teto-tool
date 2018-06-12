@@ -5,9 +5,6 @@
 [![license](https://img.shields.io/npm/l/teto-tool.svg)](https://github.com/kagawagao/teto-tool/blob/master/LICENSE)
 [![Build Status](https://travis-ci.org/kagawagao/teto-tool.svg?branch=master)](https://travis-ci.org/kagawagao/teto-tool)
 [![Standard - JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](http://standardjs.com/)
-[![bitHound Overall Score](https://www.bithound.io/github/kagawagao/teto-tool/badges/score.svg)](https://www.bithound.io/github/kagawagao/teto-tool)
-[![bitHound Dependencies](https://www.bithound.io/github/kagawagao/teto-tool/badges/dependencies.svg)](https://www.bithound.io/github/kagawagao/teto-tool/master/dependencies/npm)
-[![bitHound Dev Dependencies](https://www.bithound.io/github/kagawagao/teto-tool/badges/devDependencies.svg)](https://www.bithound.io/github/kagawagao/teto-tool/master/dependencies/npm)
 
  A tool, but more
 
