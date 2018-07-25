@@ -1,4 +1,4 @@
-#!/usr/bin/env node --harmony
+#!/usr/bin/env node
 
 import download from 'download-git-repo'
 import program from 'commander'
@@ -8,7 +8,7 @@ import co from 'co'
 import coPrompt from 'co-prompt'
 // import {execSync as exec} from 'child_process'
 // import prompt from 'prompt-for-patched'
-import { isEmptyDir, isND } from './utils/helpers'
+import { isEmptyDir } from './utils/helpers'
 
 /**
  * Usage
@@ -56,9 +56,9 @@ let directoryName = ''
  * start
  */
 async function start () {
-  if (await isND()) {
-    sourceName = 'gitlab:http://git.sdp.nd:fed/ae-boilerplate'
-  }
+  // if (await isND()) {
+  //   sourceName = 'gitlab:http://git.sdp.nd:fed/ae-boilerplate'
+  // }
   if (program.args[1]) {
     sourceName = program.args[1]
   }
