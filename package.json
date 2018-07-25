@@ -3,7 +3,8 @@
   "version": "2.3.0",
   "description": "just a tool",
   "scripts": {
-    "build": "babel src -d bin"
+    "build": "babel src -d bin",
+    "prepare": "npm run build"
   },
   "bin": {
     "teto": "bin/teto.js"
