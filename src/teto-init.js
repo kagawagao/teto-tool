@@ -101,7 +101,9 @@ function run () {
     clone: false
   }, (err) => {
     if (err) {
-      throw err
+      console.log(chalk.red('Download failed!!!'))
+      console.error(err)
+      process.exit(1)
     }
     console.log(chalk.yellow('Download success!!!'))
     writePackageJSON()
