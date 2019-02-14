@@ -16,27 +16,28 @@
   },
   "license": "MIT",
   "dependencies": {
-    "babel-runtime": "^6.23.0",
-    "chalk": "^2.4.1",
+    "@babel/runtime": "^7.3.1",
+    "chalk": "^2.4.2",
     "co": "^4.6.0",
     "co-prompt": "^1.0.0",
-    "commander": "^2.16.0",
+    "commander": "^2.19.0",
     "deep-sort-object": "^1.0.1",
-    "download-git-repo": "^1.0.2",
+    "download-git-repo": "^1.1.0",
     "flat": "^4.1.0",
-    "fs-extra": "^4.0.3"
+    "fs-extra": "^7.0.1"
   },
   "devDependencies": {
-    "babel-cli": "^6.23.0",
-    "babel-eslint": "^8.2.6",
-    "babel-plugin-transform-runtime": "^6.23.0",
-    "babel-preset-env": "^1.7.0",
-    "eslint": "^4.19.1",
-    "eslint-config-standard": "^10.2.1",
-    "eslint-plugin-import": "^2.13.0",
-    "eslint-plugin-node": "^5.2.1",
-    "eslint-plugin-promise": "^3.8.0",
-    "eslint-plugin-standard": "^3.1.0"
+    "@babel/cli": "^7.2.3",
+    "@babel/core": "^7.2.2",
+    "@babel/plugin-transform-runtime": "^7.2.0",
+    "@babel/preset-env": "^7.3.1",
+    "babel-eslint": "^10.0.1",
+    "eslint": "^5.13.0",
+    "eslint-config-standard": "^12.0.0",
+    "eslint-plugin-import": "^2.16.0",
+    "eslint-plugin-node": "^8.0.1",
+    "eslint-plugin-promise": "^4.0.1",
+    "eslint-plugin-standard": "^4.0.0"
   },
   "engines": {
     "node": ">= 6.4.0",
