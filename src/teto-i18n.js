@@ -1,11 +1,11 @@
 #!/usr/bin/env node --harmony
 
-import chalk from 'chalk'
-import path from 'path'
-import fs from 'fs-extra'
-import program from 'commander'
-import flattern, {unflatten} from 'flat'
-import sortObject from 'deep-sort-object'
+import chalk from 'chalk';
+import path from 'path';
+import fs from 'fs-extra';
+import program from 'commander';
+import flattern, { unflatten } from 'flat';
+import sortObject from 'deep-sort-object';
 
 const rootPath = process.cwd()
 
@@ -20,8 +20,8 @@ program.on('--help', () => {
 program.parse(process.argv)
 
 /**
-** Padding.
-**/
+ ** Padding.
+ **/
 
 console.log()
 process.on('exit', function () {
@@ -30,34 +30,38 @@ process.on('exit', function () {
 })
 
 /**
-** check file path.
-**/
+ ** check file path.
+ **/
 
 try {
   fs.close(fs.openSync(path.resolve(rootPath, 'package.json'), 'r'))
 } catch (e) {
   console.dir(e)
-  console.log(chalk.red('Cannot find package.json, please check your file path!'))
+  console.log(
+    chalk.red('Cannot find package.json, please check your file path!')
+  )
   process.exit(0)
 }
 
 /**
-** get config.
-**/
+ ** get config.
+ **/
 let config
 try {
   config = fs.readJsonSync(path.resolve(rootPath, '.i18n'))
 } catch (e) {
   console.dir(e)
-  console.log(chalk.red('Cannot find config file named as .i18n, please check!'))
+  console.log(
+    chalk.red('Cannot find config file named as .i18n, please check!')
+  )
   process.exit(0)
 }
-let pathSrc = config.path_src
-let pathI18n = config.path_i18n
-let languages = config.languages
-let includeFiles = config.include_files
+const pathSrc = config.path_src
+const pathI18n = config.path_i18n
+const languages = config.languages
+const includeFiles = config.include_files
 // let excludeFiles = config.exclude_files
-let i18nHelper = config.i18n_helper
+const i18nHelper = config.i18n_helper
 let defaultData = config.default_data || {}
 // let default_language config.default_language
 
@@ -66,10 +70,18 @@ if (typeof defaultData === 'string') {
     defaultData = fs.readJsonSync(path.resolve(rootPath, defaultData))
   } catch (e) {
     defaultData = {}
-    console.log(chalk.red('Cannot find default data in ' + defaultData + ', it will be an empty object'))
+    console.log(
+      chalk.red(
+        'Cannot find default data in ' +
+          defaultData +
+          ', it will be an empty object'
+      )
+    )
   }
 } else if (Array.isArray(defaultData) || typeof defaultData === 'function') {
-  console.log(chalk.red('Default data must be an object or a file path, please check!'))
+  console.log(
+    chalk.red('Default data must be an object or a file path, please check!')
+  )
 }
 
 if (!pathSrc || !pathI18n || !languages || !i18nHelper) {
@@ -77,7 +89,11 @@ if (!pathSrc || !pathI18n || !languages || !i18nHelper) {
   process.exit(0)
 }
 if (!Array.isArray(languages) || languages.length === 0) {
-  console.log(chalk.red('languages must be an array and it\'s length cannot less than 1, please check!'))
+  console.log(
+    chalk.red(
+      "languages must be an array and it's length cannot less than 1, please check!"
+    )
+  )
   process.exit(0)
 }
 
@@ -104,7 +120,7 @@ languages.map(function (language) {
   const distFilePath = path.resolve(rootPath, pathI18n, language + '.json')
   try {
     fs.ensureFileSync(distFilePath)
-    translateData[language] = fs.readJsonSync(distFilePath, {throws: false})
+    translateData[language] = fs.readJsonSync(distFilePath, { throws: false })
     if (!translateData[language]) {
       translateData[language] = {}
     }
@@ -112,7 +128,7 @@ languages.map(function (language) {
     defaultData = flattern(defaultData)
     Object.keys(defaultData).map(key => {
       keys.push(key)
-      if (!translateData[language].hasOwnProperty(key)) {
+      if (!(key in translateData[language])) {
         translateData[language][key] = defaultData[key]
       }
     })
@@ -132,21 +148,26 @@ languages.map(function (language) {
 })
 
 languages.map(function (language) {
-  let distFilePath = path.resolve(rootPath, pathI18n, language + '.json')
-  fs.writeJsonSync(distFilePath, sortObject(unflatten(translateData[language])), {spaces: 2}, function (err) {
-    if (err) {
-      console.dir(err)
-      process.exit(0)
+  const distFilePath = path.resolve(rootPath, pathI18n, language + '.json')
+  fs.writeJsonSync(
+    distFilePath,
+    sortObject(unflatten(translateData[language])),
+    { spaces: 2 },
+    function (err) {
+      if (err) {
+        console.dir(err)
+        process.exit(0)
+      }
     }
-  })
+  )
 })
 
 const time = (Date.now() - start) / 1000
 console.log(chalk.yellow('Done in ' + time + 'ms!!!'))
 
 /**
-** get all files in path_src.
-**/
+ ** get all files in path_src.
+ **/
 function readDir (dir) {
   const list = fs.readdirSync(dir)
   list.forEach(function (file) {
@@ -158,16 +179,19 @@ function readDir (dir) {
       if (includeFiles) {
         const extname = path.extname(file)
         if (includeFiles.indexOf(extname) !== -1) {
-          hanldeFile(file)
+          handleFile(file)
         }
       }
     }
   })
 }
 
-function hanldeFile (file) {
+function handleFile (file) {
   const contents = fs.readFileSync(file, 'utf8')
-  const reg = new RegExp(i18nHelper + '\\((((\'.+?\'))|((".+?")))', 'gm')
+  const reg = new RegExp(
+    i18nHelper + "\\((\\s+)?((('.+?'))|((\".+?\")))",
+    'gm'
+  )
   const matched = contents.match(reg)
   if (matched) {
     matched.map(function (item) {
@@ -176,7 +200,7 @@ function hanldeFile (file) {
         if (keys.indexOf(key) === -1) {
           keys.push(key)
         }
-        if (!translateData[language].hasOwnProperty(key)) {
+        if (!(key in translateData[language])) {
           translateData[language][key] = key
         }
       })
