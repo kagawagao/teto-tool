@@ -23,7 +23,7 @@
     "commander": "^3.0.0",
     "deep-sort-object": "^1.0.1",
     "download-git-repo": "^2.0.0",
-    "flat": "^4.1.0",
+    "flat": "^5.0.2",
     "fs-extra": "^8.1.0"
   },
   "devDependencies": {
